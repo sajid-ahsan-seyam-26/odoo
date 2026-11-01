@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Administrator List View -->
+    <record id="view_hospital_admin_list" model="ir.ui.view">
+        <field name="name">hospital.admin.list</field>
+        <field name="model">hospital.admin</field>
+        <field name="arch" type="xml">
+            <list string="Hospital Administrators">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="email"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Administrator Form View -->
+    <record id="view_hospital_admin_form" model="ir.ui.view">
+        <field name="name">hospital.admin.form</field>
+        <field name="model">hospital.admin</field>
+        <field name="arch" type="xml">
+            <form string="Hospital Administrator">
+                <sheet>
+                    <!-- Smart buttons open related hospital records -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_patients"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-users"
+                                groups="om_hospital.group_hospital_admin">
+                            <field name="patient_count"
+                                   widget="statinfo"
+                                   string="Patients"/>
+                        </button>
+
+                        <button name="action_open_doctors"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-user-md"
+                                groups="om_hospital.group_hospital_admin">
+                            <field name="doctor_count"
+                                   widget="statinfo"
+                                   string="Doctors"/>
+                        </button>
+
+                        <button name="action_open_nurses"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-heartbeat"
+                                groups="om_hospital.group_hospital_admin">
+                            <field name="nurse_count"
+                                   widget="statinfo"
+                                   string="Nurses"/>
+                        </button>
+
+                        <button name="action_open_staff"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-id-card"
+                                groups="om_hospital.group_hospital_admin">
+                            <field name="staff_count"
+                                   widget="statinfo"
+                                   string="Staff"/>
+                        </button>
+                    </div>
+
+                    <widget name="web_ribbon"
+                            title="Archived"
+                            bg_color="text-bg-danger"
+                            invisible="active"/>
+
+                    <field name="active" invisible="1"/>
+
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"
+                                   placeholder="Administrator name"/>
+                        </h1>
+                    </div>
+
+                    <group string="Contact Details">
+                        <field name="phone" widget="phone"/>
+                        <field name="email" widget="email"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Administrator Search View -->
+    <record id="view_hospital_admin_search" model="ir.ui.view">
+        <field name="name">hospital.admin.search</field>
+        <field name="model">hospital.admin</field>
+        <field name="arch" type="xml">
+            <search string="Administrators">
+                <field name="name"/>
+                <field name="email"/>
+                <filter name="archived"
+                        string="Archived"
+                        domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Administrator Action -->
+    <record id="action_hospital_admin" model="ir.actions.act_window">
+        <field name="name">Hospital Administration</field>
+        <field name="res_model">hospital.admin</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id"
+               ref="view_hospital_admin_search"/>
+    </record>
+
+    <!-- Administrator Menu -->
+    <menuitem id="menu_hospital_admin"
+              name="Administration"
+              parent="menu_hospital_root"
+              action="action_hospital_admin"
+              sequence="5"
+              groups="om_hospital.group_hospital_admin"/>
+
+</odoo>
