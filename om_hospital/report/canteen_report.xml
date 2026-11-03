@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Report Action -->
+    <record id="action_report_canteen" model="ir.actions.report">
+        <field name="name">Canteen Report print</field> <!-- print menu te eta dekhabe -->
+        <field name="model">hospital.canteen</field> <!-- model name -->
+        <field name="report_type">qweb-pdf</field> <!-- qweb pdf formet -->
+        <field name="report_name">om_hospital.report_canteen_template</field> <!-- report canteen er template k pdf banabe-->
+        <field name="binding_model_id" ref="model_hospital_canteen"/>
+        <field name="binding_type">report</field>  <!-- print menu te report option hisebe thakbe -->
+    </record>
+
+    <!-- Report Template -->
+    <template id="report_canteen_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="seyam">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <h2>Hospital Canteen Report</h2>
+
+                        <p>
+                            <strong>Reference: </strong>
+                            CANTEEN-<span t-out="seyam.id"/>
+                        </p>
+
+                        <p>
+                            <strong>Food Name: </strong>
+                            <span t-field="seyam.food_name"/>
+                        </p>
+
+                        <p>
+                            <strong>Manufacture Date: </strong>
+                            <span t-field="seyam.food_manufacture_date"/>
+                        </p>
+
+                        <p>
+                            <strong>People Type: </strong>
+                            <span t-field="seyam.people_type"/>
+                        </p>
+
+                        <p>
+                            <strong>Status: </strong>
+                            <span t-field="seyam.state"/>
+                        </p>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Food</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Tax (%)</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span t-field="seyam.food_name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="seyam.quantity"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="seyam.unit_price"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="seyam.tax_percent"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="seyam.subtotal"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>Subtotal</td>
+                                    <td>
+                                        <span t-field="seyam.subtotal"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Tax Amount</td>
+                                    <td>
+                                        <span t-field="seyam.tax_amount"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <strong>Total Price</strong>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span t-field="seyam.total_price"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Barcode er part -->
+                        <div class="mt-4"> <!-- Barcode rakahr container -->
+                            <h4>Barcode</h4>  <!-- Barcode heading -->
+
+                            <img
+                                t-att-src="'/report/barcode/Code128/SEYAM-%s?width=600&amp;height=100' % seyam.id"
+                                style="width:300px; height:50px;"
+                                alt="Canteen Barcode"
+                            />
+
+                            <p>
+                                Seyam Canteen BARCODE-<span t-out="seyam.id"/>
+                            </p>
+                        </div>
+
+                        <!-- QR Code er part -->
+                        <div class="mt-4">
+                            <h4>QR Code</h4>
+
+                            <img
+                                t-att-src="'/report/barcode/QR/SEYAM-%s?width=150&amp;height=150' % seyam.id"
+                                style="width:150px; height:150px;"
+                                alt="Canteen QR Code"
+                            />
+                             <p>
+                                Seyam Canteen QR CODE-<span t-out="seyam.id"/>
+                            </p>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

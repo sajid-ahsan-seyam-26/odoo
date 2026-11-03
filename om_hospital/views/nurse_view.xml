@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <!-- =========================
+         NURSE LIST VIEW
+         ========================= -->
+
+    <record id="view_nurse_list" model="ir.ui.view">
+        <field name="name">hospital.nurse.list</field>
+        <field name="model">hospital.nurse</field>
+
+        <field name="arch" type="xml">
+            <list string="Nurses">
+
+                <field name="priority" widget="priority"/>
+                <field name="name"/>
+                <field name="date_of_birth"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="registration"/>
+                <field name="nurse_code"/>
+
+                <!-- Monetary Field -->
+                <field name="salary"/>
+
+                <field name="state" widget="badge"/>
+
+            </list>
+        </field>
+    </record>
+
+
+    <!-- =========================
+         NURSE FORM VIEW
+         ========================= -->
+
+    <record id="view_nurse_form" model="ir.ui.view">
+        <field name="name">hospital.nurse.form</field>
+        <field name="model">hospital.nurse</field>
+
+        <field name="arch" type="xml">
+
+            <form string="Nurse">
+
+                <!-- Header -->
+                <header>
+
+                    <button
+                        name="action_activate"
+                        string="Activate"
+                        type="object"
+                        class="oe_highlight"
+
+                    />
+
+                    <button
+                        name="action_deactivate"
+                        string="Set Inactive"
+                        type="object"
+
+                    />
+
+                    <button
+                        name="action_draft"
+                        string="Reset to Draft"
+                        type="object"
+
+                    />
+
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,active,inactive"
+                    />
+
+                </header>
+
+
+                <!-- Main Form -->
+                <sheet>
+
+                    <div class="oe_title">
+
+                        <h1>
+
+                            <field
+                                name="priority"
+                                widget="priority"
+                                class="mr-3"
+                            />
+
+                            <field
+                                name="name"
+                                placeholder="Nurse Name"
+                            />
+
+                        </h1>
+
+                    </div>
+
+
+                    <!-- Notebook -->
+                    <notebook>
+
+
+
+                        <page
+                            string="Personal Details"
+                            name="personal_details"
+                        >
+
+                            <group>
+
+                                <group>
+                                    <field name="date_of_birth"/>
+                                    <field name="age" readonly="1"/>
+                                </group>
+
+                                <group>
+                                    <field name="gender"/>
+                                </group>
+
+                            </group>
+
+                        </page>
+
+
+
+
+                        <page
+                            string="Registration Details"
+                            name="registration_details"
+                        >
+
+                            <group>
+
+                                <field name="registration"/>
+                                <field name="nurse_code"/>
+
+                            </group>
+
+                        </page>
+
+
+
+                        <page
+                            string="Salary"
+                            name="salary_details"
+                        >
+
+                            <group>
+
+                                <field name="currency_id"/>
+
+                                <field
+                                    name="salary"
+                                    widget="monetary"
+                                />
+
+                            </group>
+
+                        </page>
+
+
+                        <!-- =========================
+                             NOTES / HTML
+                             ========================= -->
+
+                        <page
+                            string="Notes"
+                            name="notes"
+                        >
+
+                            <field
+                                name="notes"
+                                widget="html"
+                                nolabel="1"
+                                placeholder="Write nurse notes here..."
+                            />
+
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+
+
+                <!-- Chatter -->
+                <chatter/>
+
+            </form>
+
+        </field>
+    </record>
+
+
+    <!-- =========================
+         SEARCH VIEW
+         ========================= -->
+
+    <record id="view_hospital_nurse_search" model="ir.ui.view">
+
+        <field name="name">hospital.nurse.search</field>
+        <field name="model">hospital.nurse</field>
+
+        <field name="arch" type="xml">
+
+            <search string="Search Nurses">
+
+                <!-- Search Fields -->
+
+                <field name="name"/>
+                <field name="nurse_code"/>
+                <field name="registration"/>
+
+
+                <!-- Filters -->
+
+                <filter
+                    name="high_priority"
+                    string="High Priority"
+                    domain="[('priority', 'in', ['2', '3'])]"
+                />
+
+                <filter
+                    name="active_nurses"
+                    string="Active"
+                    domain="[('state', '=', 'active')]"
+                />
+
+                <filter
+                    name="inactive_nurses"
+                    string="Inactive"
+                    domain="[('state', '=', 'inactive')]"
+                />
+
+
+                <!-- Group By -->
+
+                <group>
+
+                    <filter
+                        name="group_by_state"
+                        string="Status"
+                        context="{'group_by': 'state'}"
+                    />
+
+                    <filter
+                        name="group_by_gender"
+                        string="Gender"
+                        context="{'group_by': 'gender'}"
+                    />
+
+                </group>
+
+            </search>
+
+        </field>
+    </record>
+
+
+
+
+    <record id="action_nurse" model="ir.actions.act_window">
+
+        <field name="name">Nurses</field>
+        <field name="res_model">hospital.nurse</field>
+        <field name="view_mode">list,form</field>
+
+        <field
+            name="search_view_id"
+            ref="view_hospital_nurse_search"
+        />
+
+    </record>
+
+
+
+
+
+
+</odoo>

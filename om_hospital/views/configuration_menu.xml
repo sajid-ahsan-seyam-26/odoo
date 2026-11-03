@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_hospital_configuration"
+              name="Configurations"
+              parent="menu_hospital_root"
+              groups="om_hospital.group_hospital_user"
+              sequence="60"/>
+
+    <menuitem id="menu_doctor_schedule"
+              name="Doctor Schedule"
+              parent="menu_hospital_configuration"
+              action="action_doctor_schedule"
+              groups="om_hospital.group_hospital_admin"
+              sequence="10"/>
+
+    <menuitem id="menu_wordboy"
+              name="Ward Boy"
+              parent="menu_hospital_configuration"
+              action="action_wordboy"
+              groups="om_hospital.group_hospital_admin"
+              sequence="20"/>
+
+    <menuitem id="menu_nurse"
+              name="Nurse"
+              parent="menu_hospital_configuration"
+              action="action_nurse"
+              groups="om_hospital.group_hospital_admin"
+              sequence="30"/>
+
+    <menuitem id="menu_hospital_driver"
+              name="Ambulance Driver"
+              parent="menu_hospital_configuration"
+              action="action_hospital_driver"
+              groups="om_hospital.group_hospital_user"
+              sequence="40"/>
+
+    <menuitem id="menu_hospital_canteen"
+              name="Canteen"
+              parent="menu_hospital_configuration"
+              action="action_hospital_canteen"
+              groups="om_hospital.group_hospital_user"
+              sequence="41"/>
+
+    <menuitem id="menu_hospital_helicopter"
+              name="Helicopter"
+              parent="menu_hospital_configuration"
+              action="action_hospital_helicopter"
+              groups="om_hospital.group_hospital_user"
+              sequence="50"/>
+
+</odoo>

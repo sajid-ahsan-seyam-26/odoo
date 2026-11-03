@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+      <!-- PDF report-er settings -->
+    <record id="action_report_patient_wordboy"
+            model="ir.actions.report">
+
+        <field name="name">Patient WordBoy Assignment</field>
+        <field name="model">hospital.patient.wizard</field>
+        <field name="report_type">qweb-pdf</field> <!-- q web use kore pdf banabe -->
+        <field name="report_name">om_hospital.report_patient_wordboy</field>
+        <field name="report_file">om_hospital.report_patient_wordboy</field>
+
+
+    </record>
+
+    <!-- PDF-er design -->
+    <template id="report_patient_wordboy"> <!-- template er id -->
+        <t t-call="web.html_container"> <!-- html formet dei report er formet-->
+            <t t-foreach="docs" t-as="wizard">
+                <t t-call="web.external_layout">  <!-- odoo r report layout create kore company r logo name and footer thake-->
+                    <div class="page"> <!-- report er page content-->
+
+                        <h2>Patient WordBoy Assignment</h2>
+
+                        <table class="table table-bordered"> <!-- row and column wise dekhabe ..table =table er style and table-bordered table er border style -->
+                            <tbody>
+                                <tr>
+                                    <th>Patient</th>
+                                    <td>
+                                        <span t-field="wizard.patient_id.name"/><!-- patient er actual name dekhano -->
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Patient Phone</th>
+                                    <td>
+                                        <span t-field="wizard.patient_id.phone"/> <!-- phone number dekhano -->
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>WordBoy</th>
+                                    <td>
+                                        <span t-field="wizard.wordboy_id.name"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>WordBoy Phone</th>
+                                    <td>
+                                        <span t-field="wizard.wordboy_id.phone"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Doctor List View -->
+    <record id="view_hospital_doctor_list" model="ir.ui.view">
+        <field name="name">hospital.doctor.list</field>
+        <field name="model">hospital_doctor</field>
+        <field name="arch" type="xml">
+            <list string="Doctors">
+                <field name="doctor_code"/>
+                <field name="name"/>
+                <field name="user_id"
+                       groups="om_hospital.group_hospital_admin"
+                       options="{'no_create': True}"/>
+                <field name="specialization"/>
+                <field name="qualification"/>
+                <field name="registration_number"/>
+                <field name="phone"/>
+                <field name="experience"/>
+                <field name="consultation_fee"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Doctor Form View -->
+    <record id="view_hospital_doctor_form" model="ir.ui.view">
+        <field name="name">hospital.doctor.form</field>
+        <field name="model">hospital_doctor</field>
+        <field name="arch" type="xml">
+            <form string="Doctor">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"
+                                   placeholder="Doctor Name"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Professional Information">
+                            <field name="doctor_code"/>
+
+                            <!-- Link the doctor's login account -->
+                            <field name="user_id"
+                                   groups="om_hospital.group_hospital_admin"
+                                   options="{'no_create': True}"/>
+
+                            <field name="specialization"/>
+                            <field name="qualification"
+                                   placeholder="Example: MBBS, FCPS"/>
+                            <field name="registration_number"/>
+                            <field name="experience"/>
+                            <field name="consultation_fee"/>
+                        </group>
+
+                        <group string="Contact Information">
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="joining_date"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+
+                        <!-- Patients who selected this doctor -->
+                        <page string="Patients"
+                              name="patients"
+                              groups="om_hospital.group_hospital_admin">
+                            <field name="patient_ids" readonly="1">
+                                <list create="0" edit="0" delete="0">
+                                    <field name="name"/>
+                                    <field name="age"/>
+                                    <field name="gender"/>
+                                    <field name="phone"/>
+                                    <field name="email"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Notes" name="notes">
+                            <field name="notes"
+                                   placeholder="Additional doctor information..."/>
+                        </page>
+
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Doctor Search View -->
+    <record id="view_hospital_doctor_search" model="ir.ui.view">
+        <field name="name">hospital.doctor.search</field>
+        <field name="model">hospital_doctor</field>
+        <field name="arch" type="xml">
+            <search string="Search Doctors">
+                <field name="name"
+                       string="Doctor"
+                       filter_domain="[
+                           '|', '|',
+                           ('name', 'ilike', self),
+                           ('doctor_code', 'ilike', self),
+                           ('phone', 'ilike', self)
+                       ]"/>
+
+                <field name="specialization"/>
+                <field name="registration_number"/>
+
+                <group>
+                    <filter name="group_specialization"
+                            string="Specialization"
+                            context="{'group_by': 'specialization'}"/>
+                    <filter name="group_joining_date"
+                            string="Joining Date"
+                            context="{'group_by': 'joining_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Doctor Kanban View -->
+    <record id="view_hospital_doctor_kanban" model="ir.ui.view">
+        <field name="name">hospital.doctor.kanban</field>
+        <field name="model">hospital_doctor</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex flex-column gap-2">
+                            <div class="fw-bold fs-5">
+                                <field name="name"/>
+                            </div>
+
+                            <div>
+                                <strong>Doctor ID: </strong>
+                                <field name="doctor_code"/>
+                            </div>
+
+                            <div>
+                                <strong>Specialization: </strong>
+                                <field name="specialization"/>
+                            </div>
+
+                            <div>
+                                <strong>Qualification: </strong>
+                                <field name="qualification"/>
+                            </div>
+
+                            <div>
+                                <strong>Phone: </strong>
+                                <field name="phone" widget="phone"/>
+                            </div>
+
+                            <div>
+                                <strong>Experience: </strong>
+                                <field name="experience"/> years
+                            </div>
+
+                            <div>
+                                <strong>Consultation Fee: </strong>
+                                <field name="consultation_fee"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Doctor Calendar View -->
+    <record id="view_hospital_doctor_calendar" model="ir.ui.view">
+        <field name="name">hospital.doctor.calendar</field>
+        <field name="model">hospital_doctor</field>
+        <field name="arch" type="xml">
+            <calendar string="Doctor Joining Dates"
+                      date_start="joining_date"
+                      color="specialization"
+                      mode="month"
+                      quick_create="false">
+                <field name="name"/>
+                <field name="specialization"/>
+                <field name="phone"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Doctor Pivot View -->
+    <record id="view_hospital_doctor_pivot" model="ir.ui.view">
+        <field name="name">hospital.doctor.pivot</field>
+        <field name="model">hospital_doctor</field>
+        <field name="arch" type="xml">
+            <pivot string="Doctor Analysis">
+                <field name="specialization" type="row"/>
+                <field name="joining_date"
+                       type="col"
+                       interval="month"/>
+                <field name="consultation_fee" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Doctor Graph View -->
+    <record id="view_hospital_doctor_graph" model="ir.ui.view">
+        <field name="name">hospital.doctor.graph</field>
+        <field name="model">hospital_doctor</field>
+        <field name="arch" type="xml">
+            <graph string="Doctors by Specialization" type="bar">
+                <field name="specialization"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Doctor Action -->
+    <record id="action_hospital_doctor" model="ir.actions.act_window">
+        <field name="name">Doctors</field>
+        <field name="res_model">hospital_doctor</field>
+        <field name="view_mode">kanban,list,form,calendar,pivot,graph</field>
+        <field name="search_view_id"
+               ref="view_hospital_doctor_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first doctor
+            </p>
+            <p>
+                Add and manage doctors, specialization,
+                and qualifications.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_hospital_root"
+              name="Hospital"
+              sequence="10"/>
+
+    <menuitem id="menu_hospital_doctor"
+          name="Doctors"
+          parent="menu_hospital_root"
+          action="action_hospital_doctor"
+          groups="om_hospital.group_hospital_user"
+          sequence="20"/>
+
+</odoo>

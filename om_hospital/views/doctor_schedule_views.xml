@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Schedule List View -->
+    <record id="view_doctor_schedule_list" model="ir.ui.view">
+        <field name="name">hospital.doctor.schedule.list</field>
+        <field name="model">hospital.doctor.schedule</field>
+        <field name="arch" type="xml">
+            <list string="Doctor Schedules">
+                <field name="name"/>
+                <field name="doctor_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Schedule Form View -->
+    <record id="view_doctor_schedule_form" model="ir.ui.view">
+        <field name="name">hospital.doctor.schedule.form</field>
+        <field name="model">hospital.doctor.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Doctor Schedule">
+                <sheet>
+                    <group>
+                        <group string="Task Details">
+                            <field name="name"
+                                   placeholder="Example: Morning Duty"/>
+                            <field name="doctor_id"/>
+                        </group>
+
+                        <group string="Schedule">
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Schedule Calendar View -->
+    <record id="view_doctor_schedule_calendar" model="ir.ui.view">
+        <field name="name">hospital.doctor.schedule.calendar</field>
+        <field name="model">hospital.doctor.schedule</field>
+        <field name="arch" type="xml">
+            <calendar string="Doctor Schedules"
+                      date_start="date_start"
+                      date_stop="date_end"
+                      color="doctor_id"
+                      mode="week"
+                      quick_create="false">
+                <field name="name"/>
+                <field name="doctor_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Schedule Search View -->
+    <record id="view_doctor_schedule_search" model="ir.ui.view">
+        <field name="name">hospital.doctor.schedule.search</field>
+        <field name="model">hospital.doctor.schedule</field>
+        <field name="arch" type="xml">
+            <search string="Search Doctor Schedules">
+                <field name="name"/>
+                <field name="doctor_id"/>
+
+                <filter name="filter_start_date"
+                        string="Start Date"
+                        date="date_start"/>
+
+                <group>
+                    <filter name="group_by_doctor"
+                            string="Doctor"
+                            context="{'group_by': 'doctor_id'}"/>
+                    <filter name="group_by_start_day"
+                            string="Day"
+                            context="{'group_by': 'date_start:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Schedule Action -->
+    <record id="action_doctor_schedule" model="ir.actions.act_window">
+        <field name="name">Doctor Schedules</field>
+        <field name="res_model">hospital.doctor.schedule</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="search_view_id"
+               ref="view_doctor_schedule_search"/>
+    </record>
+
+    <!-- Schedule Menu -->
+    <menuitem id="menu_doctor_schedule"
+              name="Doctor Schedules"
+              parent="menu_hospital_root"
+              action="action_doctor_schedule"
+              sequence="25"/>
+
+</odoo>

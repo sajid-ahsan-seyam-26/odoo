@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hospital_patient_user,hospital.patient user,model_hospital_patient,om_hospital.group_hospital_admin,1,1,1,1
+access_hospital_doctor_user,hospital doctor user,model_hospital_doctor,om_hospital.group_hospital_user,1,1,1,1
+access_hospital_nurse_user,hospital nurse user,model_hospital_nurse,om_hospital.group_hospital_admin,1,1,1,1
+access_seyam_user,seyam user,model_seyam,om_hospital.group_hospital_admin,1,1,1,1
+access_wordboy_user,wordboy user,model_wordboy,om_hospital.group_hospital_admin,1,1,1,1
+access_hospital_admin_admin,hospital admin administrator,model_hospital_admin,om_hospital.group_hospital_admin,1,1,1,1
+access_hospital_patient_admin,hospital patient administrator,model_hospital_patient,om_hospital.group_hospital_admin,1,1,1,1
+access_hospital_doctor_admin,hospital doctor administrator,model_hospital_doctor,om_hospital.group_hospital_admin,1,1,1,1
+access_hospital_nurse_admin,hospital nurse administrator,model_hospital_nurse,om_hospital.group_hospital_admin,1,1,1,1
+access_hospital_staff_admin,hospital staff administrator,model_seyam,om_hospital.group_hospital_admin,1,1,1,1
+access_hospital_doctor_schedule_user,hospital.doctor.schedule.user,model_hospital_doctor_schedule,om_hospital.group_hospital_admin,1,1,1,1
+access_hospital_patient_wizard,Hospital Patient Wizard,model_hospital_patient_wizard,om_hospital.group_hospital_admin,1,1,1,1
+access_hospital_driver_user,hospital.driver user,model_hospital_driver,om_hospital.group_hospital_user,1,1,1,1
+access_hospital_orm_user,hospital.orm.user,model_hospital_orm,om_hospital.group_hospital_admin,1,1,1,1
+access_hospital_canteen_user,hospital.canteen user,model_hospital_canteen,om_hospital.group_hospital_user,1,1,1,1
+access_hospital_helicopter_user,hospital.helicopter user,model_hospital_helicopter,om_hospital.group_hospital_user,1,1,1,1

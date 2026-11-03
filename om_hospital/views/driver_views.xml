@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+     <!-- Driver Activity View -->
+    <record id="view_hospital_driver_activity" model="ir.ui.view">
+        <field name="name">hospital.driver.activity</field>
+        <field name="model">hospital.driver</field>
+        <field name="arch" type="xml">
+            <activity string="Driver Activities">
+                <templates>
+                    <div t-name="activity-box">
+                        <div>
+                            <strong>
+                                <field name="name"/>
+                            </strong>
+                        </div>
+
+                        <div>
+                            Phone:
+                            <field name="phone_number"/>
+                        </div>
+
+                        <div>
+                            Ambulance:
+                            <field name="ambulance_type"/>
+                        </div>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+    <!-- Add Chatter to Existing Driver Form -->
+    <record id="view_hospital_driver_form_activity" model="ir.ui.view">
+        <field name="name">hospital.driver.form.activity</field>
+        <field name="model">hospital.driver</field>
+        <field name="inherit_id"
+               ref="om_hospital.view_hospital_driver_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet" position="after">
+                <chatter/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Enable Activity View in Existing Driver Action -->
+    <record id="action_hospital_driver" model="ir.actions.act_window">
+        <field name="view_mode">list,form,activity</field>
+    </record>
+
+
+    <!-- Driver Form View -->
+    <record id="view_hospital_driver_form" model="ir.ui.view">
+        <field name="name">hospital.driver.form</field>
+        <field name="model">hospital.driver</field>
+        <field name="arch" type="xml">
+            <form string="Driver Information">
+
+                <sheet>
+                    <group string="Driver Details">
+                        <group>
+                            <field name="name"/>
+                            <field name="phone_number"/>
+                            <field name="ambulance_type"/>
+                            <field name="color" widget="color_picker"/>
+                        </group>
+                    </group>
+
+                    <group string="Ambulance Fare Calculator">
+                        <group>
+                            <field name="total_km"/>
+                            <field name="total_fare"
+                                   readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Driver List View -->
+    <record id="view_hospital_driver_list" model="ir.ui.view">
+        <field name="name">hospital.driver.list</field>
+        <field name="model">hospital.driver</field>
+        <field name="arch" type="xml">
+            <list string="Driver List">
+                <field name="name"/>
+                <field name="phone_number"/>
+                <field name="ambulance_type"/>
+                <field name="total_km"/>
+                <field name="total_fare"/>
+                <field name="color" widget="color_picker"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- Driver Window Action -->
+    <record id="action_hospital_driver"
+            model="ir.actions.act_window">
+        <field name="name">Drivers</field>
+        <field name="res_model">hospital.driver</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Main Menu -->
+    <menuitem
+        id="menu_hospital_root"
+        name="Hospital Management"
+        sequence="10"
+    />
+
+
+
+</odoo>

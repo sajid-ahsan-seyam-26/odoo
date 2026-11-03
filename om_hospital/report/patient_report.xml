@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Print menu-te patient card add korbe -->
+    <record id="action_report_patient" model="ir.actions.report">
+        <field name="name">Patient Card print korbe</field> <!-- print menu te eta dekhabe -->
+        <field name="model">hospital.patient</field><!-- hospital.model theke asbe -->
+        <field name="report_type">qweb-pdf</field><!-- qweb template use kore print korbe -->
+        <field name="report_name">om_hospital.report_patient</field><!-- report_patient er template pdf banabe -->
+        <field name="binding_model_id" ref="model_hospital_patient"/>
+        <field name="binding_type">report</field><!-- print menu te report option hisebe thakbe -->
+        <field name="print_report_name">'Patient - %s' % object.name</field> <!-- download houya pdf er name thik korbe  -->
+    </record>
+
+    <!-- PDF-er design -->
+    <template id="report_patient">
+        <t t-call="web.html_container">  <!-- odoo report pdf korar age html document hisebe -->
+            <t t-foreach="docs" t-as="seyam"> <!-- t-foreach docs means patient theke ekta ekta kore patient nibe-->
+                <t t-call="web.external_layout"> <!-- company settings wise logo name footer thake -->
+                    <div class="page">
+
+                        <h2>Patient Card</h2>
+
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Name</th>
+                                    <td>
+                                        <span t-field="seyam.name"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Date of Birth</th>
+                                    <td>
+                                        <span t-field="seyam.date_of_birth"
+                                              t-options="{'widget': 'date'}"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Age</th>
+                                    <td>
+                                        <span t-field="seyam.age"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Gender</th>
+                                    <td>
+                                        <span t-field="seyam.gender"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Phone</th>
+                                    <td>
+                                        <span t-field="seyam.phone"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Email</th>
+                                    <td>
+                                        <span t-field="seyam.email"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Address</th>
+                                    <td>
+                                        <span t-field="seyam.address"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Doctor</th>
+                                    <td>
+                                        <span t-field="seyam.doctor_id"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>WordBoy</th>
+                                    <td>
+                                        <span t-field="seyam.wordboy_id"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Status</th>
+                                    <td>
+                                        <span t-field="seyam.state"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <t t-if="seyam.notes">
+                            <h4>Notes</h4>
+                            <div t-field="seyam.notes"
+                                 style="white-space: pre-wrap;"/>
+                        </t>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

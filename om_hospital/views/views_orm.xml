@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hospital_orm_form" model="ir.ui.view">
+        <field name="name">hospital.orm.form</field>
+        <field name="model">hospital.orm</field>
+        <field name="arch" type="xml">
+            <form string="ORM Practice">
+                <sheet>
+                    <group>
+                        <field name="driver_record_id"/>
+                        <field name="search_name"/>
+                    </group>
+
+                    <group string="ORM Methods">
+                        <button name="action_create"
+                                string="create()/info create korbe"
+                                type="object"/>
+
+                        <button name="action_browse"
+                                string="browse()/info find"
+                                type="object"/>
+
+                        <button name="action_write"
+                                string="write()/update info"
+                                type="object"/>
+
+                        <button name="action_unlink"
+                                string="unlink()/delete korbe"
+                                type="object"
+                                confirm="Permanently delete korben?"/>
+
+                        <button name="action_get_metadata"
+                                string="get_metadata()"
+                                type="object"/>
+
+                        <button name="action_search"
+                                string="search()"
+                                type="object"/>
+
+                        <button name="action_search_count"
+                                string="search_count()"
+                                type="object"/>
+                    </group>
+
+                    <group string="Result">
+                        <field name="result" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hospital_orm" model="ir.actions.act_window">
+        <field name="name">ORM Practice</field>
+        <field name="res_model">hospital.orm</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_hospital_orm_form"/>
+    </record>
+
+    <menuitem id="menu_hospital_root"
+              name="Hospital"
+              sequence="10"/>
+
+    <menuitem id="menu_hospital_orm"
+              name="ORM Methods"
+               parent="menu_hospital_root"
+              action="action_hospital_orm"
+              sequence="30"/>
+
+</odoo>

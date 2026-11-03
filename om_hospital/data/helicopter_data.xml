@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="helicopter_sample"
+                model="hospital.helicopter"
+                forcecreate="1">
+
+            <field name="name">Helicopter AB</field>
+            <field name="phone">01700000000</field>
+            <field name="state">draft</field>
+
+        </record>
+
+    </data>
+</odoo>

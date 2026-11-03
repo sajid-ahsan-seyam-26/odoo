@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Patient List -->
+    <record id="view_hospital_patient_list" model="ir.ui.view">
+        <field name="name">hospital.patient.list</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="date_of_birth" optional="hide"/>
+                <field name="age"/>
+                <field name="doctor_id"
+                       options="{'no_create': True, 'no_open': True}"/>
+                <field name="gender"/>
+                <field name="phone"/>
+                <field name="email" optional="show"/>
+                <field name="wordboy_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Patient Form -->
+    <record id="view_hospital_patient_form" model="ir.ui.view">
+        <field name="name">hospital.patient.form</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <form string="Patient">
+                <header>
+                 <button
+                   name="action_activate"
+                     type="object"
+                      class="oe_highlight"
+                      string="Activate korun"
+
+
+                 />
+                    <button
+                       name="action_reset"
+                       type="object"
+                       string="Reset to Draft korun"
+
+                    />
+                     <field
+                      name="state"
+                      widget="statusbar"
+                      />
+                    <button name="action_open_wizard"
+                             string="Assign korun WordBoy"
+                             type="object"
+                             class="oe_highlight"/>
+                </header>
+                <sheet>
+
+                    <field name="active"/>
+
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"
+                                   placeholder="Patient name"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Personal Details">
+                            <field name="date_of_birth"/>
+                            <field name="age"/>
+                            <field name="doctor_id"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="gender"/>
+                        </group>
+
+                        <group string="Contact Details">
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="address"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="notes"
+                                   placeholder="Additional patient details..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Patient Search -->
+    <record id="view_hospital_patient_search" model="ir.ui.view">
+        <field name="name">hospital.patient.search</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"
+                       string="Name or Phone"
+                       filter_domain="['|',
+                           ('name', 'ilike', self),
+                           ('phone', 'ilike', self)
+                       ]"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="doctor_id"/>
+                <searchpanel>
+                    <field name="gender"
+                           string="Gender"
+                           select="one"
+                           icon="fa-users"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <!-- All Patients Action -->
+    <record id="action_hospital_patient" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id"
+               ref="view_hospital_patient_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first patient record
+            </p>
+        </field>
+    </record>
+
+    <!-- Logged-in Doctor's Patients -->
+    <record id="action_hospital_my_patients"
+            model="ir.actions.act_window">
+        <field name="name">My Patients</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id"
+               ref="view_hospital_patient_search"/>
+        <field name="domain">
+            [('doctor_id.user_id', '=', uid)]
+        </field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p>
+                Patients who select you as their doctor will appear here.
+            </p>
+        </field>
+    </record>
+
+
+    <!-- Hospital Menu -->
+    <menuitem id="menu_hospital_root"
+              name="Hospital"
+              sequence="10"
+              web_icon="om_hospital,static/description/icon.png"/>
+
+    <!-- All Patients Menu -->
+    <menuitem id="menu_hospital_patients"
+              name="Patients"
+              parent="menu_hospital_root"
+              action="action_hospital_patient"
+              sequence="10"/>
+
+    <menuitem id="menu_hospital_my_patients"
+          name="My Patients"
+          parent="menu_hospital_root"
+          action="action_hospital_my_patients"
+          groups="-base.group_user,om_hospital.group_hospital_admin"
+          sequence="15"/>
+
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="driver_01" model="hospital.driver">
+        <field name="name">sajeeb</field>
+        <field name="phone_number">01712345678</field>
+        <field name="ambulance_type">hino ambulance</field>
+        <field name="total_km">50</field>
+    </record>
+
+    <record id="driver_02" model="hospital.driver">
+        <field name="name">Karim</field>
+        <field name="phone_number">01812345678</field>
+        <field name="ambulance_type">toyota ambulance</field>
+        <field name="total_km">100</field>
+    </record>
+
+    <record id="driver_03" model="hospital.driver">
+        <field name="name">Hasan</field>
+        <field name="phone_number">01912345678</field>
+        <field name="ambulance_type">hundai ambulance</field>
+        <field name="total_km">150</field>
+    </record>
+     <record id="driver_04" model="hospital.driver">
+        <field name="name">hasan ali</field>
+        <field name="phone_number">01912345679</field>
+        <field name="ambulance_type">hino ambulance</field>
+        <field name="total_km">160</field>
+    </record>
+
+</odoo>

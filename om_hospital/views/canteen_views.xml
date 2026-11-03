@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form View -->
+    <record id="view_hospital_canteen_form" model="ir.ui.view">
+        <field name="name">hospital.canteen.form</field>
+        <field name="model">hospital.canteen</field>
+        <field name="arch" type="xml">
+            <form string="Hospital Canteen">
+                <header>
+    <button name="action_confirm"
+            string="Confirm"
+            type="object"/>
+
+    <button name="action_done"
+            string="Done"
+            type="object"/>
+
+    <button name="action_cancel"
+            string="Cancel"
+            type="object"/>
+
+    <button name="action_draft"
+            string="Reset to Draft"
+            type="object"/>
+
+    <field name="state"
+           widget="statusbar"
+           statusbar_visible="draft,active,done,cancel"/>
+</header>
+                <sheet>
+                    <group string="Food Details">
+                        <field name="food_name" />
+
+                        <field name="food_manufacture_date" readonly="1"
+                               force_save="1"/>
+                        <field name="people_type"/>
+                        <field name="gender" widget="radio"/>
+                        <field name="progress" string="Progress (%)"/>
+                        <field name="progress" widget="progressbar"/>
+                    </group>
+
+                    <group string="Price">
+                        <field name="currency_id"/>
+                        <field name="quantity"/>
+                        <field name="unit_price"/>
+                        <field name="tax_percent"/>
+                    </group>
+
+                    <group string="Total">
+                        <field name="subtotal"/>
+                        <field name="tax_amount"/>
+                        <field name="total_price"/>
+                    </group>
+                </sheet>
+
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- List View -->
+    <record id="view_hospital_canteen_list" model="ir.ui.view">
+        <field name="name">hospital.canteen.list</field>
+        <field name="model">hospital.canteen</field>
+        <field name="arch" type="xml">
+            <list string="Hospital Canteen"
+      decoration-success="state == 'done'"
+      decoration-danger="state == 'cancel'">
+                <field name="food_name" decoration-it="True"/>
+                <field name="food_manufacture_date" decoration-it="True" decoration-bf="True"/>
+                <field name="people_type" decoration-it="True" decoration-bf="True"/>
+                <field name="currency_id" decoration-it="True" decoration-bf="True"/>
+                <field name="quantity" decoration-it="True" />
+                <field name="unit_price" decoration-it="True" />
+                <field name="tax_percent" decoration-it="True" />
+                <field name="subtotal" decoration-it="True"/>
+                <field name="tax_amount" decoration-it="True" decoration-bf="True"/>
+                <field name="total_price"/>
+                <field name="state"
+                       widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-danger="state == 'cancel'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_hospital_canteen" model="ir.actions.act_window">
+        <field name="name">Hospital Canteen</field>
+        <field name="res_model">hospital.canteen</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Hospital menu -->
+    <record id="module_category_hospital" model="ir.module.category">
+        <field name="name">Hospital</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- group-gulo ei privilege-er under-e thakbe -->
+    <record id="privilege_hospital" model="res.groups.privilege">
+        <field name="name">Hospital</field>
+        <field name="category_id" ref="module_category_hospital"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Normal hospital user -->
+    <record id="group_hospital_user" model="res.groups">
+        <field name="name">Hospital User</field>
+        <field name="sequence">10</field>
+        <field name="privilege_id" ref="privilege_hospital"/>
+        <field name="implied_ids"
+               eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Admin user-er permission-o pabe -->
+    <record id="group_hospital_admin" model="res.groups">
+        <field name="name">Hospital Administrator</field>
+        <field name="sequence">20</field>
+        <field name="privilege_id" ref="privilege_hospital"/>
+        <field name="implied_ids"
+               eval="[(4, ref('group_hospital_user'))]"/>
+    </record>
+
+    <!-- Settings admin hospital-er admin access-o pabe -->
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids"
+               eval="[(4, ref('group_hospital_admin'))]"/>
+    </record>
+
+</odoo>
